@@ -1,20 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GloryJewelleryApi.Models;
+using GloryJewelleryApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace GloryJewelleryApi
 {
     public class Startup
     {
+        readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,7 +23,26 @@ namespace GloryJewelleryApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(_myAllowSpecificOrigins, builder =>
+                {
+                    builder.WithOrigins(
+                        "http://localhost:3000",
+                        "https://localhost:3000"
+                    )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+            services.Configure<JewelleryDatabaseSettings>(Configuration.GetSection(nameof(JewelleryDatabaseSettings)));
+
+            services.AddSingleton<IJewelleryDatabaseSettings>(serviceProvider =>
+                serviceProvider.GetRequiredService<IOptions<JewelleryDatabaseSettings>>().Value);
+
             services.AddControllers();
+            services.AddScoped<IJewelleryService, JewelleryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
