@@ -20,7 +20,7 @@ namespace GloryJewelleryApi.Services
             _jewellery.Find(jewellery => true).ToList();
 
         public Jewellery Get(string id) =>
-            _jewellery.Find(jewellery => jewellery.Id == id).FirstOrDefault();
+            _jewellery.Find<Jewellery>(jewellery => jewellery.Id == id).FirstOrDefault();
 
         public Jewellery Create(Jewellery jewellery)
         {

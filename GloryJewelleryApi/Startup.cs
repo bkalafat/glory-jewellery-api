@@ -29,7 +29,21 @@ namespace GloryJewelleryApi
                 {
                     builder.WithOrigins(
                         "http://localhost:3000",
-                        "https://localhost:3000"
+                        "https://localhost:3000",
+                        "http://localhost:8000",
+                        "http://localhost:8080",
+                        "https://localhost:8000",
+                        "https://localhost:8080", "https://haberibul.com",
+                        "http://gloryjewelleryy.com",
+                        "https://www.gloryjewelleryy.com",
+                        "http://www.gloryjewelleryy.com",
+                        "http://m.gloryjewelleryy.com",
+                        "https://m.gloryjewelleryy.com",
+                        "http://gloryjewelleryy:8000",
+
+                        "https://gloryjewellerys.web.app",
+
+                        "https://gloryjewellerys.firebaseapp.com"
                     )
                         .AllowAnyHeader()
                         .AllowAnyMethod();
