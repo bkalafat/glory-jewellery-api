@@ -11,7 +11,7 @@ namespace GloryJewelleryApi
 {
     public class Startup
     {
-        readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        readonly string MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -25,16 +25,29 @@ namespace GloryJewelleryApi
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(_myAllowSpecificOrigins, builder =>
+                options.AddPolicy(MyAllowSpecificOrigins, builder =>
                 {
                     builder.WithOrigins(
                         "http://localhost:3000",
+                        "http://localhost:3000/editor/new",
                         "https://localhost:3000",
                         "http://localhost:8000",
                         "http://localhost:8080",
                         "https://localhost:8000",
-                        "https://localhost:8080", "https://haberibul.com",
+                        "https://localhost:8080",
+                        "http://localhost:5000",
+                        "http://localhost:5001",
+                        "https://localhost:5000",
+                        "https://localhost:5001",
+                        "https://gloryjewelleryy.com",
                         "http://gloryjewelleryy.com",
+                        "https://m.gloryjewelleryy.com",
+                        "http://m.gloryjewelleryy.com",
+                        "https://e-ticaret-git-master.bkalafat.vercel.app",
+                        "https://e-ticaret.vercel.app",
+                        "https://e-ticaret.bkalafat.vercel.app",
+                        "https://gloryjewellerys.com",
+                        "http://gloryjewellerys.com",
                         "https://www.gloryjewelleryy.com",
                         "http://www.gloryjewelleryy.com",
                         "http://m.gloryjewelleryy.com",
@@ -55,6 +68,7 @@ namespace GloryJewelleryApi
             services.AddSingleton<IJewelleryDatabaseSettings>(serviceProvider =>
                 serviceProvider.GetRequiredService<IOptions<JewelleryDatabaseSettings>>().Value);
 
+
             services.AddControllers();
             services.AddScoped<IJewelleryService, JewelleryService>();
         }
@@ -70,6 +84,8 @@ namespace GloryJewelleryApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
